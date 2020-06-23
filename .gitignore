@@ -13,3 +13,4 @@ yarn-error.log
 /.idea/
 /config/endpoints.php
 /.bash_history
+/sis-apipr-dev-error.log
