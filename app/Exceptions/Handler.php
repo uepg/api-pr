@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        ApiprException::class,
     ];
 
     /**
@@ -50,6 +50,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ApiprException) {
+            return [
+                'mensagem'=> $exception->getMessage(),
+            ];
+        }
+
         return parent::render($request, $exception);
     }
 }
