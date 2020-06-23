@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'api-key' => 'defina a hash de key aqui',
+
     /**
      * Mantenha do lado esquedo o índice do domínio, o qual será enviado junto ao nome do usuário,
      * por exemplo joao@uepg.br, o índice deverá ser uepg.br
