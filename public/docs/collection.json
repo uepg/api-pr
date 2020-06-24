@@ -1,0 +1,45 @@
+{
+    "variables": [],
+    "info": {
+        "name": "Laravel API",
+        "_postman_id": "1ac9f8c3-87c3-43d1-ac3e-877b526c7676",
+        "description": "API PR - broker",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.0.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "IpTv",
+            "description": "\nAPI broker para autentica\u00e7\u00e3o no servi\u00e7o de IPTV do estado.",
+            "item": [
+                {
+                    "name": "Autenticar usu\u00e1rio",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "localhost",
+                            "path": "api\/iptv\/login",
+                            "query": []
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"user\": \"quill@guardioes.edu.br\",\n    \"password\": \"minhasenhaforte\",\n    \"api-key\": \"hash-gigante-com-uuid-super-secreto\"\n}"
+                        },
+                        "description": "Realizar a autentica\u00e7\u00e3o em diversos sistemas de autentica\u00e7\u00e3o das IEES do Paran\u00e1.",
+                        "response": []
+                    }
+                }
+            ]
+        }
+    ]
+}

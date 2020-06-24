@@ -39,8 +39,8 @@ class IptvDomain
 
         $class = $namespace . Str::studly($idx);
 
-        throw_unless(class_exists($class), new \Exception('Não reconhecemos o serviço de tratamento para o domínio @'.
-            str_replace('_', '.', $idx)));
+        throw_unless(class_exists($class), new ApiprException('Não foi implementado o serviço de tratamento para o domínio @'.
+            str_replace('_', '.', $idx), 503));
 
         return $class;
     }

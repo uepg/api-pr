@@ -35,6 +35,14 @@ class IptvController extends Controller
      * "mensagem": "Chave secreta da api incorreta."
      * }
      *
+     * @response 404 {
+     * "mensagem": "Não encontramos entrada de configuração para o domínio @blablabla."
+     * }
+     *
+     * @response 503 {
+     * "mensagem": "Não foi implementado o serviço de tratamento para o domínio @blablabla."
+     * }
+     *
      * @param Request $request
      * @return mixed
      * @throws \Illuminate\Validation\ValidationException
