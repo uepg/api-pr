@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -55,6 +56,13 @@ class Handler extends ExceptionHandler
             return new JsonResponse([
                 'mensagem'=> $exception->getMessage(),
             ], $exception->getCode());
+        }
+
+        if (Str::contains($exception->getMessage(), 'certificate has expired')) {
+            return new JsonResponse([
+                'mensagem'=> 'O certificado do agente de autenticação está expirado, por favor entre em contato com o administrador do domínio: ' .
+                    Str::after($request->get('user', '"não identificado"'), '@'),
+            ], 502);
         }
 
         return parent::render($request, $exception);
