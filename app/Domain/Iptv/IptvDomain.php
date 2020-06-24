@@ -3,17 +3,32 @@
 namespace App\Domain\Iptv;
 
 use App\Domain\Iptv\Services\IptvService;
+use App\Exceptions\ApiprException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class IptvDomain
 {
+    protected function checkUserFormat($user)
+    {
+        throw_unless(Str::contains($user, '@'),
+            new ApiprException('Obrigatório o envio do domínio com o nome do usuario, por exemplo usuario@uepg.br', 400));
+    }
+
+    protected function checkIndex($idx)
+    {
+        throw_unless(Arr::exists(config('endpoints.iptv.login'), $idx),
+            new ApiprException('Não encontramos entrada de configuração para o domínio @'.
+                str_replace('_', '.', $idx), 404));
+    }
+
     protected function resolveConfigIndex($user)
     {
         $idx = str_replace('.', '_', Str::after($user, '@'));
 
-        throw_unless(Arr::exists(config('endpoints.iptv.login'), $idx), new \Exception('Não encontramos entrada de configuração para o domínio @'.
-            str_replace('_', '.', $idx)));
+        $this->checkUserFormat($user);
+
+        $this->checkIndex($idx);
 
         return $idx;
     }
