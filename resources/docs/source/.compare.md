@@ -20,6 +20,10 @@ Welcome to the generated API reference.
 [Get Postman Collection](http://localhost/docs/collection.json)
 
 <!-- END_INFO -->
+# API PR
+
+Broker (bridge) de api para serviços nas IEES do Paraná e o Governo do Estado.
+
 
 #IpTv
 
