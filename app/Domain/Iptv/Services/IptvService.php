@@ -3,6 +3,9 @@
 namespace App\Domain\Iptv\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
 Abstract class IptvService
@@ -28,11 +31,23 @@ Abstract class IptvService
 
     public function login(string $user, string $password)
     {
-        return $this->http->request('POST', config('endpoints.iptv.login.'.$this->index), [
-            'json' => [
-                'user' => $user,
-                'password' => $password,
-            ]
-        ])->getBody();
+        try {
+            $response = $this->http->request('POST', config('endpoints.iptv.login.' . $this->index), [
+                //'http_errors' => false,
+                'json' => [
+                    'user' => $user,
+                    'password' => $password,
+                ]
+            ]);
+        } catch (GuzzleException $exception) {
+            throw_if($exception->getResponse()->getStatusCode() >= 500, $exception);
+
+            $response = $exception->getResponse();
+        }
+
+        return new JsonResponse(
+            json_decode($response->getBody()->getContents(), true),
+            $response->getStatusCode()
+        );
     }
 }
