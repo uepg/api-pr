@@ -36,6 +36,8 @@ return [
                 'uepg_br'  => [
                     'url'=> 'endpoint',
                     'api-key'=> 'api-key-da-ies',
+                    'client_id' => 'client-id-app-sgi-interno-uepg',
+                    'client_secret' => 'client-secret-app-sgi-interno-uepg',
                 ],
                 'unicentro_br'  => [
                     'url'=> 'endpoint',
