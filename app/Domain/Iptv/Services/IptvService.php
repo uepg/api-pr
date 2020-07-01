@@ -32,9 +32,10 @@ Abstract class IptvService
     public function login(string $user, string $password)
     {
         try {
-            $response = $this->http->request('POST', config('endpoints.iptv.login.' . $this->index), [
+            $response = $this->http->request('POST', config('endpoints.iptv.login.' . $this->index . '.url'), [
                 //'http_errors' => false,
                 'json' => [
+                    'api-key' => config('endpoints.iptv.login.' . $this->index . '.api-key'),
                     'user' => $user,
                     'password' => $password,
                 ]
