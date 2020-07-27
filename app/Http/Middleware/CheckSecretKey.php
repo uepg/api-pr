@@ -16,9 +16,9 @@ class CheckSecretKey
      */
     public function handle($request, Closure $next)
     {
-        $key = $request->get('api-key', false);
+        $key = $request->get('token', false);
 
-        throw_unless($key == config('endpoints.api-key'), new ApiprException('Chave secreta da api incorreta.', 401));
+        throw_unless($key == config('endpoints.token'), new ApiprException('Chave secreta da api incorreta.', 401));
 
         return $next($request);
     }
