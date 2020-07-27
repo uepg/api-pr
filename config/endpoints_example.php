@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'api-key' => 'defina a hash de key aqui',
+    'token' => 'defina a hash de key aqui',
 
     /**
      * Mantenha do lado esquedo o índice do domínio, o qual será enviado junto ao nome do usuário,
@@ -24,32 +24,39 @@ return [
                 'uel_br' => [
                     'url'=> 'endpoint',
                     'api-key'=> 'api-key-da-ies',
+                    'nickname-prefix' => 'aaa',
                 ],
                 'uem_br'  => [
                     'url'=> 'endpoint',
                     'api-key'=> 'api-key-da-ies',
+                    'nickname-prefix' => 'aaa',
                 ],
                 'unespar_edu_br'  => [
                     'url'=> 'endpoint',
                     'api-key'=> 'api-key-da-ies',
+                    'nickname-prefix' => 'aaa',
                 ],
                 'uepg_br'  => [
                     'url'=> 'endpoint',
                     'api-key'=> 'api-key-da-ies',
                     'client_id' => 'client-id-app-sgi-interno-uepg',
                     'client_secret' => 'client-secret-app-sgi-interno-uepg',
+                    'nickname-prefix' => 'aaa',
                 ],
                 'unicentro_br'  => [
                     'url'=> 'endpoint',
                     'api-key'=> 'api-key-da-ies',
+                    'nickname-prefix' => 'aaa',
                 ],
                 'uenp_edu_br'  => [
                     'url'=> 'endpoint',
                     'api-key'=> 'api-key-da-ies',
+                    'nickname-prefix' => 'aaa',
                 ],
                 'unioeste_br'  => [
                     'url'=> 'endpoint',
                     'api-key'=> 'api-key-da-ies',
+                    'nickname-prefix' => 'aaa',
                 ],
             ]
     ],

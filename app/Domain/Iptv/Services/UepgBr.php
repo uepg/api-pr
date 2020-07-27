@@ -5,9 +5,34 @@ namespace App\Domain\Iptv\Services;
 use App\Domain\Iptv\Services\IptvService;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
+use Psr\Http\Message\ResponseInterface;
 
 class UepgBr extends IptvService
 {
+
+    public function evalResponse(string $user, ResponseInterface $response): JsonResponse
+    {
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        $tipo = 'professor';
+        if (strtolower($data['usuario']['perfil']['nome']) == 'graduacao') {
+            $tipo = 'academico';
+        }
+
+        $data = [
+            'nome' => $data['usuario']['nome'],
+            'email' => $data['usuario']['email'],
+            'tipo' => $tipo,
+            'url' => 'https://classroom.google.com',
+            'nickname' => $this->evalNickName($user),
+        ];
+
+        return new JsonResponse(
+            $data,
+            $response->getStatusCode()
+        );
+    }
 
     public function login(string $user, string $password)
     {
@@ -24,24 +49,7 @@ class UepgBr extends IptvService
                 ]
             ]);
 
-            $data = json_decode($response->getBody()->getContents(), true);
-
-            $tipo = 'professor';
-            if (strtolower($data['usuario']['perfil']['nome']) == 'graduacao') {
-                $tipo = 'academico';
-            }
-
-            $data = [
-                'nome' => $data['usuario']['nome'],
-                'email' => $data['usuario']['email'],
-                'tipo' => $tipo,
-                'url' => 'https://classroom.google.com',
-            ];
-
-            $response = [
-                'data' => $data,
-                'code' => $response->getStatusCode(),
-            ];
+            return $this->evalResponse($user, $response);
 
         } catch (GuzzleException $exception) {
             throw_if($exception->getResponse()->getStatusCode() >= 500, $exception);
@@ -55,12 +63,13 @@ class UepgBr extends IptvService
                     ],
                     'code' => $response->getStatusCode(),
                 ];
+
+                return new JsonResponse(
+                    $response['data'],
+                    $response['code'],
+                );
+
             }
         }
-
-        return new JsonResponse(
-            $response['data'],
-            $response['code'],
-        );
     }
 }
