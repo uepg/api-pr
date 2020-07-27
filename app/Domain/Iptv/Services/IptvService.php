@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
+use Psr\Http\Message\ResponseInterface;
 
 Abstract class IptvService
 {
@@ -29,6 +30,38 @@ Abstract class IptvService
         ]);
     }
 
+    protected function evalNickName(string $user) : string
+    {
+        $user = Str::before($user, '@');
+        $nickName = config('endpoints.iptv.login.' . $this->index . '.nickname-prefix') . '_' . $user;
+        return Str::limit($nickName, 20);
+    }
+
+    /**
+     * Monta o json de resposta, pode ser sobreposto nas classes específicas para montar o array de acordo com características
+     * de cada IEES
+     *
+     * @param $response
+     * @return JsonResponse
+     */
+    public function evalResponse(string $user, ResponseInterface $response) : JsonResponse
+    {
+        $responseData = json_decode($response->getBody()->getContents(), true);
+
+        $data = [
+            'nome' => $responseData['nome'],
+            'email' => $responseData['email'],
+            'tipo' => $responseData['tipo'],
+            'url' => $responseData['url'],
+            'nickname' => $this->evalNickName($user),
+        ];
+
+        return new JsonResponse(
+            $data,
+            $response->getStatusCode()
+        );
+    }
+
     public function login(string $user, string $password)
     {
         try {
@@ -46,9 +79,6 @@ Abstract class IptvService
             $response = $exception->getResponse();
         }
 
-        return new JsonResponse(
-            json_decode($response->getBody()->getContents(), true),
-            $response->getStatusCode()
-        );
+        return $this->evalResponse($user, $response);
     }
 }
